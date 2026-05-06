@@ -1,110 +1,643 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta name="google-site-verification" content="N7hvmyyq79ctiu5tXrTxB4cQK21MCrkPTivN5xV6TRA" />  
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>JKKNIU News | জাতীয় কবি কাজী নজরুল ইসলাম বিশ্ববিদ্যালয়</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Hind+Siliguri:wght@300;400;500;600;700&family=Source+Serif+4:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Hind+Siliguri:wght@300;400;500;600;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --navy:#0b1d3a;
-  --blue:#1a4785;
+  --ink:#0a0f1e;
+  --navy:#0d2137;
+  --blue:#1b4f8a;
   --mid:#2563a8;
-  --accent:#c8102e;
-  --gold:#f5a623;
-  --light:#eef3fb;
-  --text:#0f1b2d;
-  --muted:#5a6a7e;
-  --border:#d4dff0;
+  --crimson:#c0122a;
+  --gold:#d4a017;
+  --light:#f0f5ff;
+  --pale:#f8fafd;
+  --muted:#607389;
+  --border:#dde6f0;
   --white:#ffffff;
-  --bg:#f0f4fa;
+  --shadow:0 4px 24px rgba(13,33,55,.10);
+  --shadow-lg:0 12px 48px rgba(13,33,55,.16);
 }
+
 html{scroll-behavior:smooth}
-body{font-family:'Hind Siliguri',sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.7}
+body{font-family:'Hind Siliguri',sans-serif;background:var(--pale);color:var(--ink);font-size:15px;line-height:1.7}
 a{text-decoration:none;color:inherit}
 img{max-width:100%;display:block}
 
-/* ── TOPBAR ── */
-.topbar{background:var(--navy);color:#8fb3d4;font-size:12px;padding:7px 0;border-bottom:2px solid var(--accent)}
-.topbar-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+/* ══ TOPBAR ══ */
+.topbar{background:var(--ink);color:#6a8aaa;font-size:11.5px;padding:8px 0;border-bottom:1.5px solid rgba(192,18,42,.6)}
+.topbar-inner{max-width:1320px;margin:0 auto;padding:0 20px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 .topbar-left{display:flex;align-items:center;gap:16px}
-.topbar-right{display:flex;align-items:center;gap:14px}
-.topbar a{color:#8fb3d4;transition:color .2s}
+.topbar-right{display:flex;align-items:center;gap:16px}
+.topbar a{color:#6a8aaa;transition:color .2s}
 .topbar a:hover{color:#fff}
-.live-dot{display:inline-flex;align-items:center;gap:5px;background:var(--accent);color:#fff;padding:2px 9px;border-radius:3px;font-weight:700;font-size:11px;letter-spacing:1px}
-.live-dot::before{content:'';width:7px;height:7px;background:#fff;border-radius:50%;animation:blink 1s infinite}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.date-time{color:#6a90b0;font-size:11px}
+.live-pill{display:inline-flex;align-items:center;gap:5px;background:var(--crimson);color:#fff;padding:3px 10px;border-radius:20px;font-weight:700;font-size:10px;letter-spacing:1.5px;text-transform:uppercase}
+.live-pill::before{content:'';width:6px;height:6px;background:#fff;border-radius:50%;animation:pulse 1.2s ease infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.divider{color:#2a3a4a}
 
-/* ── HEADER ── */
-.site-header{background:var(--white);border-bottom:4px solid var(--navy);box-shadow:0 3px 20px rgba(11,29,58,.1)}
-.header-inner{max-width:1280px;margin:0 auto;padding:16px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px}
-.logo-block a{display:block}
-.logo-title{font-family:'Playfair Display',serif;font-size:42px;font-weight:900;color:var(--navy);letter-spacing:-1px;line-height:1}
-.logo-title span{color:var(--accent)}
-.logo-bn{font-family:'Hind Siliguri',sans-serif;font-size:13px;color:var(--muted);letter-spacing:2px;margin-top:2px}
-.logo-tagline{font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-top:1px}
-.header-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
-.header-search{display:flex;gap:0}
-.header-search input{border:2px solid var(--border);border-right:none;border-radius:6px 0 0 6px;padding:9px 14px;font-size:13px;font-family:'Hind Siliguri',sans-serif;width:220px;outline:none;transition:border .2s}
-.header-search input:focus{border-color:var(--blue)}
-.header-search button{background:var(--navy);color:#fff;border:none;border-radius:0 6px 6px 0;padding:9px 16px;cursor:pointer;font-size:14px;transition:background .2s}
-.header-search button:hover{background:var(--blue)}
+/* ══ MASTHEAD ══ */
+.masthead{background:var(--white);border-bottom:1px solid var(--border)}
+.masthead-inner{max-width:1320px;margin:0 auto;padding:20px 20px 16px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{}
+.brand-name{font-family:'Playfair Display',serif;font-size:46px;font-weight:900;color:var(--navy);letter-spacing:-2px;line-height:1}
+.brand-name em{color:var(--crimson);font-style:normal}
+.brand-sub{font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);letter-spacing:3px;text-transform:uppercase;margin-top:4px}
+.brand-tag{font-size:10px;color:var(--muted);letter-spacing:2px;margin-top:1px;display:flex;align-items:center;gap:6px}
+.brand-tag::before{content:'';width:16px;height:1px;background:var(--crimson)}
+.masthead-right{display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+.search-wrap{display:flex;align-items:center;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;background:#fff;transition:border .2s}
+.search-wrap:focus-within{border-color:var(--blue)}
+.search-wrap input{border:none;padding:9px 14px;font-size:13px;font-family:'Hind Siliguri',sans-serif;width:200px;outline:none;color:var(--ink)}
+.search-wrap button{background:var(--navy);color:#fff;border:none;padding:9px 14px;cursor:pointer;font-size:13px;transition:background .2s}
+.search-wrap button:hover{background:var(--blue)}
+.new-btn{background:var(--crimson);color:#fff;border:none;padding:9px 18px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Hind Siliguri',sans-serif;letter-spacing:.5px;transition:all .2s;box-shadow:0 3px 12px rgba(192,18,42,.3)}
+.new-btn:hover{background:#a00f22;transform:translateY(-1px);box-shadow:0 6px 20px rgba(192,18,42,.4)}
 
-/* ── NAV ── */
-.main-nav{background:var(--navy);position:sticky;top:0;z-index:100;box-shadow:0 2px 10px rgba(0,0,0,.3)}
-.nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:0;overflow-x:auto}
+/* ══ NAV ══ */
+.main-nav{background:var(--navy);position:sticky;top:0;z-index:200;box-shadow:0 3px 16px rgba(0,0,0,.25)}
+.nav-inner{max-width:1320px;margin:0 auto;padding:0 20px;display:flex;overflow-x:auto}
 .nav-inner::-webkit-scrollbar{display:none}
-.nav-inner a{color:#b8cfea;padding:14px 17px;font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;transition:all .2s;border-bottom:3px solid transparent;display:block;font-family:'Hind Siliguri',sans-serif}
-.nav-inner a:hover,.nav-inner a.active{color:#fff;border-bottom-color:var(--accent);background:rgba(255,255,255,.05)}
+.nav-inner a{color:rgba(255,255,255,.65);padding:14px 16px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.8px;white-space:nowrap;transition:all .25s;border-bottom:3px solid transparent;display:block;position:relative}
+.nav-inner a:hover,.nav-inner a.active{color:#fff;border-bottom-color:var(--crimson)}
+.nav-inner a.active{font-weight:600}
 
-/* ── TICKER ── */
-.ticker-bar{background:var(--accent);overflow:hidden}
-.ticker-inner{max-width:1280px;margin:0 auto;padding:0;display:flex;align-items:stretch}
-.ticker-tag{background:var(--navy);color:#fff;padding:8px 18px;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;display:flex;align-items:center}
-.ticker-scroll{overflow:hidden;flex:1;padding:8px 0}
-.ticker-text{color:#fff;font-size:13px;font-weight:600;white-space:nowrap;display:inline-block;animation:scroll 35s linear infinite;padding-left:100%}
-@keyframes scroll{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+/* ══ BREAKING TICKER ══ */
+.ticker{background:var(--crimson);overflow:hidden}
+.ticker-wrap{max-width:1320px;margin:0 auto;display:flex;align-items:stretch}
+.ticker-badge{background:rgba(0,0,0,.25);color:#fff;padding:9px 18px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;white-space:nowrap;flex-shrink:0;display:flex;align-items:center;gap:6px}
+.ticker-badge::before{content:'⚡'}
+.ticker-body{overflow:hidden;flex:1;padding:9px 0}
+.ticker-scroll{color:#fff;font-size:13px;font-weight:500;white-space:nowrap;display:inline-block;animation:ticker 40s linear infinite;padding-left:100%}
+@keyframes ticker{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
 
-/* ── MAIN LAYOUT ── */
-.page-body{max-width:1280px;margin:30px auto;padding:0 24px;display:grid;grid-template-columns:1fr 340px;gap:32px}
+/* ══ LAYOUT ══ */
+.page-body{max-width:1320px;margin:28px auto;padding:0 20px;display:grid;grid-template-columns:1fr 320px;gap:28px}
 
-/* ── SECTION TITLE ── */
-.sec-title{display:flex;align-items:center;gap:10px;margin-bottom:22px;padding-bottom:12px;border-bottom:2px solid var(--border)}
-.sec-title h2{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--navy)}
-.sec-title::before{content:'';width:5px;height:26px;background:var(--accent);border-radius:2px;flex-shrink:0}
-.sec-title .see-all{margin-left:auto;font-size:12px;color:var(--mid);font-weight:600;border:1px solid var(--mid);padding:3px 10px;border-radius:4px;transition:all .2s}
-.sec-title .see-all:hover{background:var(--mid);color:#fff}
+/* ══ SECTION HEADING ══ */
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--border);position:relative}
+.sec-head::before{content:'';position:absolute;bottom:-2px;left:0;width:48px;height:2px;background:var(--crimson)}
+.sec-head h2{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy)}
+.see-all{font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:var(--mid);letter-spacing:.5px;text-transform:uppercase;border:1px solid var(--border);padding:4px 12px;border-radius:4px;transition:all .2s}
+.see-all:hover{background:var(--mid);color:#fff;border-color:var(--mid)}
 
-/* ── HERO / FEATURE ── */
-.hero-grid{display:grid;grid-template-columns:1.6fr 1fr;grid-template-rows:auto auto;gap:16px;margin-bottom:32px}
-.hero-main{grid-row:1/3;position:relative;border-radius:10px;overflow:hidden;box-shadow:0 6px 30px rgba(11,29,58,.18);cursor:pointer}
-.hero-main:hover .hero-img-wrap img{transform:scale(1.04)}
-.hero-img-wrap{height:100%;min-height:360px;overflow:hidden}
-.hero-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
-.hero-img-placeholder{width:100%;min-height:360px;background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 60%,#1d6fa4 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;color:rgba(255,255,255,.3);font-size:70px}
-.hero-overlay{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(11,29,58,.92));padding:28px 24px 22px}
-.hero-cat{background:var(--accent);color:#fff;padding:3px 10px;border-radius:3px;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;width:fit-content;margin-bottom:10px}
-.hero-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:8px}
-.hero-meta{color:rgba(255,255,255,.6);font-size:12px;display:flex;gap:12px}
+/* ══ FEATURED HERO ══ */
+.hero-section{display:grid;grid-template-columns:1.7fr 1fr;grid-template-rows:auto auto;gap:14px;margin-bottom:28px}
+.hero-main{grid-row:1/3;position:relative;border-radius:12px;overflow:hidden;box-shadow:var(--shadow-lg);cursor:pointer}
+.hero-main-img{width:100%;min-height:380px;background:linear-gradient(135deg,var(--navy) 0%,var(--blue) 100%);display:flex;align-items:center;justify-content:center;font-size:80px;overflow:hidden;position:relative}
+.hero-main-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.hero-main-img::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 30%,rgba(10,15,30,.96))}
+.hero-main-body{position:absolute;bottom:0;left:0;right:0;padding:28px 24px}
+.hero-cat-badge{display:inline-flex;align-items:center;gap:5px;background:var(--crimson);color:#fff;padding:4px 12px;border-radius:4px;font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.hero-main-title{font-family:'Playfair Display',serif;font-size:24px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:10px}
+.hero-main-meta{display:flex;gap:14px;color:rgba(255,255,255,.55);font-size:11.5px;font-family:'DM Sans',sans-serif}
+.hero-side{border-radius:10px;overflow:hidden;background:var(--white);box-shadow:var(--shadow);cursor:pointer;transition:all .25s;display:flex;flex-direction:column}
+.hero-side:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.hero-side-img{height:130px;overflow:hidden;background:linear-gradient(135deg,var(--light),#c5d8f5);display:flex;align-items:center;justify-content:center;font-size:32px;position:relative;flex-shrink:0}
+.hero-side-img img{width:100%;height:100%;object-fit:cover}
+.hero-side-body{padding:14px;flex:1}
+.side-cat{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;color:var(--crimson);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px}
+.side-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:6px}
+.side-meta{font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif}
 
-.hero-side{border-radius:8px;overflow:hidden;box-shadow:0 3px 14px rgba(11,29,58,.1);background:var(--white);cursor:pointer;transition:transform .2s,box-shadow .2s}
-.hero-side:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(11,29,58,.14)}
-.hero-side .thumb{height:130px;overflow:hidden}
-.hero-side .thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-.hero-side:hover .thumb img{transform:scale(1.06)}
-.hero-side .thumb-placeholder{width:100%;height:130px;background:linear-gradient(135deg,var(--light),#c8d9f5);display:flex;align-items:center;justify-content:center;font-size:32px}
-.hero-side .info{padding:14px}
-.hero-side .s-cat{font-size:10px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
-.hero-side .s-title{font-family:'Source Serif 4',serif;font-size:14px;font-weight:600;color:var(--text);line-height:1.4;margin-bottom:6px}
-.hero-side .s-meta{font-size:11px;color:var(--muted)}
+/* ══ NEWS GRID ══ */
+.news-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px}
+.card{background:var(--white);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);transition:all .25s;cursor:pointer;display:flex;flex-direction:column}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg)}
+.card-thumb{height:150px;overflow:hidden;background:linear-gradient(135deg,var(--light),#c5d8f5);display:flex;align-items:center;justify-content:center;font-size:38px;position:relative;flex-shrink:0}
+.card-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.card:hover .card-thumb img{transform:scale(1.05)}
+.card-body{padding:14px;flex:1}
+.card-cat{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;color:var(--crimson);text-transform:uppercase;letter-spacing:1.5px;margin-bottom:5px}
+.card-title{font-family:'Playfair Display',serif;font-size:14.5px;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:8px}
+.card-title:hover{color:var(--blue)}
+.card-meta{font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif;display:flex;gap:10px}
 
-/* ── NEWS GRID ── */
-.news-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:32px}
-.news-card{background:var(--white);border-radius:8px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.06);transition:transform .2s,box-shadow .2s;cursor:pointer}
-.news-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(11,29,58,.12)}
+/* ══ LIST NEWS ══ */
+.list-section{background:var(--white);border-radius:10px;overflow:hidden;box-shadow:var(--shadow);margin-bottom:28px}
+.list-item{display:flex;gap:14px;padding:16px;border-bottom:1px solid var(--border);transition:background .2s;cursor:pointer}
+.list-item:last-child{border-bottom:none}
+.list-item:hover{background:var(--pale)}
+.list-thumb{width:90px;height:70px;border-radius:7px;overflow:hidden;flex-shrink:0;background:var(--light);display:flex;align-items:center;justify-content:center;font-size:22px}
+.list-thumb img{width:100%;height:100%;object-fit:cover}
+.list-cat{font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;color:var(--mid);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px}
+.list-title{font-family:'Playfair Display',serif;font-size:14px;font-weight:700;color:var(--ink);line-height:1.4;margin-bottom:4px}
+.list-meta{font-size:11px;color:var(--muted);font-family:'DM Sans',sans-serif}
+
+/* ══ SIDEBAR ══ */
+.sidebar{display:flex;flex-direction:column;gap:20px}
+.widget{background:var(--white);border-radius:10px;overflow:hidden;box-shadow:var(--shadow)}
+.w-head{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--border)}
+.w-head::before{content:'';width:4px;height:20px;background:var(--crimson);border-radius:2px;flex-shrink:0}
+.w-head h3{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--navy)}
+.w-body{padding:16px}
+
+/* Trending */
+.trend-item{display:flex;gap:12px;align-items:flex-start;padding:11px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:all .2s}
+.trend-item:first-child{padding-top:0}
+.trend-item:last-child{border-bottom:none;padding-bottom:0}
+.trend-item:hover .trend-title{color:var(--blue)}
+.trend-num{font-family:'Playfair Display',serif;font-size:28px;font-weight:900;color:var(--border);line-height:1;min-width:34px}
+.trend-title{font-size:12.5px;font-weight:600;color:var(--ink);line-height:1.4}
+.trend-meta{font-size:10.5px;color:var(--muted);margin-top:3px;font-family:'DM Sans',sans-serif}
+
+/* Tags */
+.tag-wrap{display:flex;flex-wrap:wrap;gap:7px;padding:16px}
+.tag{background:var(--light);color:var(--navy);padding:5px 13px;border-radius:20px;font-size:11.5px;font-weight:600;cursor:pointer;transition:all .2s;border:1px solid transparent;font-family:'Hind Siliguri',sans-serif}
+.tag:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+
+/* Ad */
+.ad-block{background:linear-gradient(135deg,var(--light),#dce8fb);border:1.5px dashed #a8c0e0;border-radius:8px;margin:16px;min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;color:var(--muted);gap:8px}
+.ad-block span{font-size:32px}
+.ad-block p{font-size:11px;font-family:'DM Sans',sans-serif;text-transform:uppercase;letter-spacing:1px;font-weight:600}
+
+/* About */
+.about-logo{font-family:'Playfair Display',serif;font-size:26px;font-weight:900;color:var(--navy);text-align:center;margin-bottom:8px}
+.about-logo em{color:var(--crimson);font-style:normal}
+.about-text{font-size:12.5px;color:var(--muted);line-height:1.7;text-align:center}
+.about-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)}
+.stat{text-align:center}
+.stat-n{font-family:'Playfair Display',serif;font-size:20px;font-weight:900;color:var(--navy)}
+.stat-l{font-size:10px;color:var(--muted);font-family:'DM Sans',sans-serif;text-transform:uppercase;letter-spacing:.5px}
+
+/* ══ FOOTER ══ */
+.site-footer{background:var(--ink);color:#5a7a9a;margin-top:48px}
+.footer-top{max-width:1320px;margin:0 auto;padding:48px 20px 32px;display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:36px}
+.fl-name{font-family:'Playfair Display',serif;font-size:30px;font-weight:900;color:#fff;letter-spacing:-1px;margin-bottom:6px}
+.fl-name em{color:var(--crimson);font-style:normal}
+.fl-sub{font-size:11px;color:#3a5a72;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px}
+.fl-desc{font-size:12.5px;color:#4a6880;line-height:1.8}
+.fc h4{color:rgba(255,255,255,.7);font-family:'DM Sans',sans-serif;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,.06)}
+.fc a{display:block;color:#4a6880;font-size:12.5px;margin-bottom:8px;transition:all .2s;font-family:'Hind Siliguri',sans-serif}
+.fc a:hover{color:#fff;padding-left:5px}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.05);max-width:1320px;margin:0 auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;font-family:'DM Sans',sans-serif;font-size:11.5px;color:#3a5470;flex-wrap:wrap;gap:8px}
+.footer-bottom a{color:#3a5470;transition:color .2s}
+.footer-bottom a:hover{color:#fff}
+
+/* ══ LOADING / EMPTY ══ */
+.loading{text-align:center;padding:48px 20px;color:var(--muted)}
+.spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--crimson);border-radius:50%;animation:spin .7s linear infinite;margin:0 auto 12px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.empty-state{text-align:center;padding:48px 20px;color:var(--muted);font-size:14px}
+.empty-state .icon{font-size:40px;margin-bottom:12px}
+
+/* ══ ADMIN PANEL ══ */
+.overlay{display:none;position:fixed;inset:0;background:rgba(5,10,20,.75);z-index:500;backdrop-filter:blur(4px);overflow-y:auto;padding:20px}
+.overlay.open{display:flex;align-items:flex-start;justify-content:center}
+.admin-box{background:#fff;border-radius:14px;width:100%;max-width:560px;margin:auto;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.35)}
+.admin-top{background:linear-gradient(135deg,var(--navy),var(--blue));padding:18px 22px;display:flex;justify-content:space-between;align-items:center}
+.admin-top h2{font-family:'Playfair Display',serif;font-size:17px;color:#fff;font-weight:700}
+.admin-top p{font-size:11px;color:rgba(255,255,255,.55);margin-top:2px;font-family:'DM Sans',sans-serif}
+.close-btn{background:rgba(255,255,255,.12);border:none;color:#fff;width:32px;height:32px;border-radius:8px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.close-btn:hover{background:rgba(255,255,255,.2)}
+.admin-content{padding:22px}
+.tabs{display:flex;gap:4px;margin-bottom:20px;background:var(--pale);border-radius:8px;padding:4px}
+.tab{flex:1;padding:9px;font-size:12px;font-weight:600;cursor:pointer;border-radius:6px;text-align:center;transition:all .2s;color:var(--muted);font-family:'DM Sans',sans-serif;border:none;background:none}
+.tab.on{background:#fff;color:var(--navy);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.fg{margin-bottom:14px}
+.fg label{display:block;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:700;color:var(--navy);margin-bottom:5px;text-transform:uppercase;letter-spacing:.8px}
+.fg input,.fg textarea,.fg select{width:100%;border:1.5px solid var(--border);border-radius:8px;padding:10px 13px;font-size:13px;font-family:'Hind Siliguri',sans-serif;color:var(--ink);outline:none;transition:border .2s;background:#fff}
+.fg input:focus,.fg textarea:focus,.fg select:focus{border-color:var(--blue)}
+.fg textarea{min-height:90px;resize:vertical}
+.btn{width:100%;padding:12px;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:'Hind Siliguri',sans-serif;transition:all .2s}
+.btn-pub{background:linear-gradient(135deg,var(--crimson),#a00f22);color:#fff;box-shadow:0 4px 16px rgba(192,18,42,.3)}
+.btn-pub:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(192,18,42,.4)}
+.btn-login{background:linear-gradient(135deg,var(--navy),var(--blue));color:#fff}
+.btn-login:hover{transform:translateY(-1px)}
+.btn-out{background:var(--pale);color:var(--ink);border:1.5px solid var(--border);width:auto;padding:7px 14px;font-size:12px;border-radius:6px}
+.msg{padding:10px 14px;border-radius:8px;font-size:12.5px;margin-bottom:14px;font-family:'DM Sans',sans-serif}
+.msg.ok{background:#dcfce7;color:#15803d;border:1px solid #bbf7d0}
+.msg.err{background:#fee2e2;color:#dc2626;border:1px solid #fecaca}
+.login-wrap{max-width:320px;margin:0 auto;text-align:center}
+.login-wrap .icon{font-size:40px;margin-bottom:12px}
+.login-wrap h3{font-family:'Playfair Display',serif;font-size:20px;color:var(--navy);margin-bottom:16px}
+.news-mgmt{display:flex;flex-direction:column;gap:8px;max-height:380px;overflow-y:auto}
+.nm-item{background:var(--pale);border-radius:8px;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;border:1px solid var(--border)}
+.nm-cat{font-size:10px;font-weight:700;color:var(--crimson);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;font-family:'DM Sans',sans-serif}
+.nm-title{font-size:13px;font-weight:600;color:var(--ink);line-height:1.4;flex:1}
+.del-btn{background:var(--crimson);color:#fff;border:none;border-radius:6px;padding:5px 10px;font-size:11px;cursor:pointer;white-space:nowrap;font-weight:600;transition:background .2s}
+.del-btn:hover{background:#a00f22}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:1024px){
+  .page-body{grid-template-columns:1fr}
+  .sidebar{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .footer-top{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .hero-section{grid-template-columns:1fr}
+  .hero-main{grid-row:auto}
+  .news-grid{grid-template-columns:1fr}
+  .sidebar{grid-template-columns:1fr}
+  .masthead-inner{flex-direction:column;align-items:flex-start}
+  .brand-name{font-size:36px}
+  .masthead-right{width:100%}
+  .search-wrap input{width:100%;flex:1}
+  .footer-top{grid-template-columns:1fr}
+  .footer-bottom{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <span class="live-pill">Live</span>
+      <span class="divider">|</span>
+      <span id="dt" style="color:#4a6a82"></span>
+    </div>
+    <div class="topbar-right">
+      <a href="#">বাংলা</a>
+      <a href="#">English</a>
+      <span class="divider">|</span>
+      <a href="#" onclick="openAdmin(event)">⚙ Admin</a>
+      <a href="#">যোগাযোগ</a>
+    </div>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="brand">
+      <div class="brand-name">JKKNIU <em>News</em></div>
+      <div class="brand-sub">জাতীয় কবি কাজী নজরুল ইসলাম বিশ্ববিদ্যালয়</div>
+      <div class="brand-tag">সত্য · নিরপেক্ষ · নির্ভরযোগ্য</div>
+    </div>
+    <div class="masthead-right">
+      <div class="search-wrap">
+        <input type="text" placeholder="সংবাদ খুঁজুন...">
+        <button>🔍</button>
+      </div>
+      <button class="new-btn" onclick="openAdmin(event)">+ নতুন সংবাদ প্রকাশ</button>
+    </div>
+  </div>
+</header>
+
+<!-- NAV -->
+<nav class="main-nav">
+  <div class="nav-inner">
+    <a href="#" class="active">হোম</a>
+    <a href="#" onclick="filterBy('বিশ্ববিদ্যালয়',this)">বিশ্ববিদ্যালয়</a>
+    <a href="#" onclick="filterBy('একাডেমিক',this)">একাডেমিক</a>
+    <a href="#" onclick="filterBy('গবেষণা',this)">গবেষণা</a>
+    <a href="#" onclick="filterBy('প্রশাসন',this)">প্রশাসন</a>
+    <a href="#" onclick="filterBy('ছাত্র সংসদ',this)">ছাত্র সংসদ</a>
+    <a href="#" onclick="filterBy('খেলাধুলা',this)">খেলাধুলা</a>
+    <a href="#" onclick="filterBy('সংস্কৃতি',this)">সংস্কৃতি</a>
+    <a href="#" onclick="filterBy('নোটিশ',this)">নোটিশ</a>
+    <a href="#" onclick="filterBy('আন্তর্জাতিক',this)">আন্তর্জাতিক</a>
+  </div>
+</nav>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-wrap">
+    <div class="ticker-badge">Breaking</div>
+    <div class="ticker-body">
+      <span class="ticker-scroll" id="tickerText">সংবাদ লোড হচ্ছে...</span>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="page-body">
+  <main>
+    <div id="featuredWrap"></div>
+
+    <div class="sec-head"><h2>সর্বশেষ সংবাদ</h2><a class="see-all" href="#">সব দেখুন →</a></div>
+    <div class="news-grid" id="gridWrap">
+      <div class="loading" style="grid-column:1/-1"><div class="spinner"></div>সংবাদ লোড হচ্ছে...</div>
+    </div>
+
+    <div class="sec-head"><h2>আরও সংবাদ</h2><a class="see-all" href="#">সব দেখুন →</a></div>
+    <div class="list-section" id="listWrap">
+      <div class="loading"><div class="spinner"></div>সংবাদ লোড হচ্ছে...</div>
+    </div>
+  </main>
+
+  <aside class="sidebar">
+    <div class="widget">
+      <div class="w-head"><h3>বিজ্ঞাপন</h3></div>
+      <div class="ad-block"><span>📢</span><p>Advertisement</p><small>আপনার বিজ্ঞাপন এখানে</small></div>
+    </div>
+
+    <div class="widget">
+      <div class="w-head"><h3>সর্বাধিক পঠিত</h3></div>
+      <div class="w-body" id="trendWrap"><div class="loading"><div class="spinner"></div></div></div>
+    </div>
+
+    <div class="widget">
+      <div class="w-head"><h3>বিষয়ভিত্তিক</h3></div>
+      <div class="tag-wrap">
+        <span class="tag" onclick="filterBy('বিশ্ববিদ্যালয়')">বিশ্ববিদ্যালয়</span>
+        <span class="tag" onclick="filterBy('একাডেমিক')">একাডেমিক</span>
+        <span class="tag" onclick="filterBy('গবেষণা')">গবেষণা</span>
+        <span class="tag" onclick="filterBy('ছাত্র সংসদ')">ছাত্র সংসদ</span>
+        <span class="tag" onclick="filterBy('খেলাধুলা')">খেলাধুলা</span>
+        <span class="tag" onclick="filterBy('সংস্কৃতি')">সংস্কৃতি</span>
+        <span class="tag" onclick="filterBy('নোটিশ')">নোটিশ</span>
+        <span class="tag" onclick="filterBy('প্রশাসন')">প্রশাসন</span>
+      </div>
+    </div>
+
+    <div class="widget">
+      <div class="w-head"><h3>আমাদের সম্পর্কে</h3></div>
+      <div class="w-body">
+        <div class="about-logo">JKKNIU <em>News</em></div>
+        <div class="about-text">জাতীয় কবি কাজী নজরুল ইসলাম বিশ্ববিদ্যালয়ের সকল সংবাদ ও তথ্যের নির্ভরযোগ্য উৎস।</div>
+        <div class="about-stats">
+          <div class="stat"><div class="stat-n">৫০+</div><div class="stat-l">খবর</div></div>
+          <div class="stat"><div class="stat-n">১০ক+</div><div class="stat-l">পাঠক</div></div>
+          <div class="stat"><div class="stat-n">২৪/৭</div><div class="stat-l">লাইভ</div></div>
+        </div>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-top">
+    <div>
+      <div class="fl-name">JKKNIU <em>News</em></div>
+      <div class="fl-sub">জাতীয় কবি কাজী নজরুল ইসলাম বিশ্ববিদ্যালয়</div>
+      <div class="fl-desc">বিশ্ববিদ্যালয়ের সকল সংবাদ, নোটিশ, গবেষণা ও শিক্ষার্থীদের কার্যক্রমের নির্ভরযোগ্য ডিজিটাল প্ল্যাটফর্ম।</div>
+    </div>
+    <div class="fc">
+      <h4>বিভাগ</h4>
+      <a href="#">বিশ্ববিদ্যালয়</a>
+      <a href="#">একাডেমিক</a>
+      <a href="#">গবেষণা</a>
+      <a href="#">প্রশাসন</a>
+    </div>
+    <div class="fc">
+      <h4>আরও</h4>
+      <a href="#">ছাত্র সংসদ</a>
+      <a href="#">খেলাধুলা</a>
+      <a href="#">সংস্কৃতি</a>
+      <a href="#">নোটিশ</a>
+    </div>
+    <div class="fc">
+      <h4>প্রতিষ্ঠান</h4>
+      <a href="#">আমাদের সম্পর্কে</a>
+      <a href="#">যোগাযোগ</a>
+      <a href="#">গোপনীয়তা নীতি</a>
+      <a href="#" onclick="openAdmin(event)">Admin Panel</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© ২০২৬ JKKNIU News · সর্বস্বত্ব সংরক্ষিত</span>
+    <span><a href="#">Privacy</a> · <a href="#">Terms</a> · <a href="#">Contact</a></span>
+  </div>
+</footer>
+
+<!-- ADMIN PANEL -->
+<div class="overlay" id="overlay">
+  <div class="admin-box">
+    <div class="admin-top">
+      <div>
+        <h2>Admin Panel</h2>
+        <p>JKKNIU News Management System</p>
+      </div>
+      <button class="close-btn" onclick="closeAdmin()">✕</button>
+    </div>
+    <div class="admin-content">
+
+      <!-- LOGIN -->
+      <div id="loginWrap">
+        <div class="login-wrap">
+          <div class="icon">🔐</div>
+          <h3>Admin Login</h3>
+          <div id="loginMsg"></div>
+          <div class="fg"><label>Email</label><input type="email" id="em" placeholder="admin@example.com"></div>
+          <div class="fg"><label>Password</label><input type="password" id="pw" placeholder="••••••••"></div>
+          <button class="btn btn-login" onclick="doLogin()">লগইন করুন</button>
+        </div>
+      </div>
+
+      <!-- ADMIN -->
+      <div id="adminWrap" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+          <span style="font-size:12px;color:var(--muted);font-family:'DM Sans',sans-serif">স্বাগতম, Admin!</span>
+          <button class="btn btn-out" onclick="doLogout()">লগআউট</button>
+        </div>
+        <div class="tabs">
+          <button class="tab on" onclick="switchT('add',this)">➕ নতুন সংবাদ</button>
+          <button class="tab" onclick="switchT('manage',this)">📋 ম্যানেজ</button>
+        </div>
+
+        <!-- ADD -->
+        <div id="addPane">
+          <div id="addMsg"></div>
+          <div class="fg"><label>শিরোনাম *</label><input type="text" id="nt" placeholder="সংবাদের শিরোনাম"></div>
+          <div class="fg"><label>বিভাগ *</label>
+            <select id="nc">
+              <option value="">বিভাগ বেছে নিন</option>
+              <option>বিশ্ববিদ্যালয়</option><option>একাডেমিক</option><option>গবেষণা</option>
+              <option>প্রশাসন</option><option>ছাত্র সংসদ</option><option>খেলাধুলা</option>
+              <option>সংস্কৃতি</option><option>নোটিশ</option><option>আন্তর্জাতিক</option>
+            </select>
+          </div>
+          <div class="fg"><label>বিবরণ *</label><textarea id="nb" placeholder="সংবাদের বিস্তারিত..."></textarea></div>
+          <div class="fg"><label>ছবির URL</label><input type="url" id="ni" placeholder="https://..."></div>
+          <div class="fg"><label>লেখক</label><input type="text" id="na" placeholder="নিজস্ব প্রতিবেদক"></div>
+          <button class="btn btn-pub" onclick="publish()">✅ সংবাদ প্রকাশ করুন</button>
+        </div>
+
+        <!-- MANAGE -->
+        <div id="managePane" style="display:none">
+          <div class="news-mgmt" id="mgmtList"><div class="loading"><div class="spinner"></div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FIREBASE -->
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, orderBy, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js";
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.0.0/firebase-auth.js";
+
+const app = initializeApp({
+  apiKey:"AIzaSyDqVWmROiTEHkYhm3iyW-Yz0aSdulytAFA",
+  authDomain:"jkkniu-news.firebaseapp.com",
+  projectId:"jkkniu-news",
+  storageBucket:"jkkniu-news.firebasestorage.app",
+  messagingSenderId:"924790747111",
+  appId:"1:924790747111:web:2e437ddf3550f0b5e65742"
+});
+const db = getFirestore(app);
+const auth = getAuth(app);
+
+// Auth
+onAuthStateChanged(auth, u => {
+  if(u){
+    document.getElementById('loginWrap').style.display='none';
+    document.getElementById('adminWrap').style.display='block';
+    loadMgmt();
+  } else {
+    document.getElementById('loginWrap').style.display='block';
+    document.getElementById('adminWrap').style.display='none';
+  }
+});
+
+async function fetchNews(cat=''){
+  const q = query(collection(db,"news"), orderBy("createdAt","desc"));
+  const snap = await getDocs(q);
+  const all = [];
+  snap.forEach(d => all.push({id:d.id,...d.data()}));
+  return cat ? all.filter(n=>n.category===cat) : all;
+}
+
+function fmtDate(ts){
+  if(!ts) return 'এইমাত্র';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  const m=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+  return `${d.getDate()} ${m[d.getMonth()]} ${d.getFullYear()}`;
+}
+
+function render(news){
+  const feat = news[0];
+  document.getElementById('featuredWrap').innerHTML = feat ? `
+    <div class="hero-section">
+      <div class="hero-main">
+        <div class="hero-main-img">${feat.imageUrl?`<img src="${feat.imageUrl}" alt="">`:'🎓'}
+          <div style="position:absolute;inset:0;background:linear-gradient(to bottom,transparent 35%,rgba(10,15,30,.96))"></div>
+        </div>
+        <div class="hero-main-body">
+          <div class="hero-cat-badge">${feat.category||'সংবাদ'}</div>
+          <div class="hero-main-title">${feat.title}</div>
+          <div class="hero-main-meta"><span>📅 ${fmtDate(feat.createdAt)}</span><span>✍ ${feat.author||'নিজস্ব প্রতিবেদক'}</span></div>
+        </div>
+      </div>
+      ${news.slice(1,3).map(n=>`
+        <div class="hero-side">
+          <div class="hero-side-img">${n.imageUrl?`<img src="${n.imageUrl}" alt="">`:'📰'}</div>
+          <div class="hero-side-body">
+            <div class="side-cat">${n.category||'সংবাদ'}</div>
+            <div class="side-title">${n.title}</div>
+            <div class="side-meta">📅 ${fmtDate(n.createdAt)}</div>
+          </div>
+        </div>`).join('')}
+    </div>` : '';
+
+  const grid = news.slice(feat?3:0, feat?7:4);
+  document.getElementById('gridWrap').innerHTML = grid.length ? grid.map(n=>`
+    <div class="card">
+      <div class="card-thumb">${n.imageUrl?`<img src="${n.imageUrl}" alt="">`:'📰'}</div>
+      <div class="card-body">
+        <div class="card-cat">${n.category||'সংবাদ'}</div>
+        <div class="card-title">${n.title}</div>
+        <div class="card-meta"><span>📅 ${fmtDate(n.createdAt)}</span></div>
+      </div>
+    </div>`).join('') : '<div class="empty-state" style="grid-column:1/-1"><div class="icon">📰</div>এখনো কোনো সংবাদ নেই। Admin Panel থেকে খবর যোগ করুন।</div>';
+
+  const list = news.slice(feat?7:4);
+  document.getElementById('listWrap').innerHTML = list.length ? list.map(n=>`
+    <div class="list-item">
+      <div class="list-thumb">${n.imageUrl?`<img src="${n.imageUrl}" alt="">`:'📰'}</div>
+      <div>
+        <div class="list-cat">${n.category||'সংবাদ'}</div>
+        <div class="list-title">${n.title}</div>
+        <div class="list-meta">📅 ${fmtDate(n.createdAt)} &nbsp;·&nbsp; ✍ ${n.author||'নিজস্ব প্রতিবেদক'}</div>
+      </div>
+    </div>`).join('') : '<div class="empty-state">আরও সংবাদ আসছে...</div>';
+
+  document.getElementById('trendWrap').innerHTML = news.slice(0,4).map((n,i)=>`
+    <div class="trend-item">
+      <div class="trend-num">0${i+1}</div>
+      <div><div class="trend-title">${n.title}</div><div class="trend-meta">📅 ${fmtDate(n.createdAt)}</div></div>
+    </div>`).join('') || '<div class="empty-state">কোনো সংবাদ নেই</div>';
+
+  document.getElementById('tickerText').textContent = news.length ? news.map(n=>n.title).join(' ‧ ') : 'সংবাদ শীঘ্রই আসছে...';
+}
+
+async function load(cat=''){
+  try{ render(await fetchNews(cat)); } catch(e){ document.getElementById('gridWrap').innerHTML='<div class="empty-state" style="grid-column:1/-1">লোড করা যায়নি</div>'; }
+}
+load();
+
+async function loadMgmt(){
+  try{
+    const news = await fetchNews();
+    document.getElementById('mgmtList').innerHTML = news.length ? news.map(n=>`
+      <div class="nm-item">
+        <div style="flex:1">
+          <div class="nm-cat">${n.category}</div>
+          <div class="nm-title">${n.title}</div>
+        </div>
+        <button class="del-btn" onclick="del('${n.id}')">🗑 মুছুন</button>
+      </div>`).join('') : '<div class="empty-state">কোনো সংবাদ নেই</div>';
+  }catch(e){}
+}
+
+window.del = async id => {
+  if(!confirm('এই সংবাদটি মুছে ফেলবেন?')) return;
+  await deleteDoc(doc(db,"news",id));
+  load(); loadMgmt();
+};
+
+window.publish = async () => {
+  const t=document.getElementById('nt').value.trim();
+  const c=document.getElementById('nc').value;
+  const b=document.getElementById('nb').value.trim();
+  const i=document.getElementById('ni').value.trim();
+  const a=document.getElementById('na').value.trim();
+  if(!t||!c||!b){ showMsg('addMsg','শিরোনাম, বিভাগ ও বিবরণ আবশ্যক!','err'); return; }
+  try{
+    await addDoc(collection(db,"news"),{title:t,category:c,content:b,imageUrl:i||'',author:a||'নিজস্ব প্রতিবেদক',createdAt:serverTimestamp()});
+    showMsg('addMsg','✅ সংবাদ সফলভাবে প্রকাশিত হয়েছে!','ok');
+    ['nt','nc','nb','ni','na'].forEach(id=>document.getElementById(id).value='');
+    load(); loadMgmt();
+  }catch(e){ showMsg('addMsg','সমস্যা: '+e.message,'err'); }
+};
+
+window.doLogin = async () => {
+  try{ await signInWithEmailAndPassword(auth, document.getElementById('em').value, document.getElementById('pw').value); }
+  catch(e){ showMsg('loginMsg','ভুল Email বা Password!','err'); }
+};
+
+window.doLogout = () => signOut(auth);
+
+window.filterBy = async (cat, el) => {
+  if(el){ document.querySelectorAll('.nav-inner a').forEach(a=>a.classList.remove('active')); el.classList.add('active'); }
+  load(cat);
+};
+
+function showMsg(id,msg,type){ const el=document.getElementById(id); el.innerHTML=`<div class="msg ${type}">${msg}</div>`; setTimeout(()=>el.innerHTML='',4000); }
+
+window.loadMgmt = loadMgmt;
+</script>
+
+<script>
+function openAdmin(e){ e&&e.preventDefault(); document.getElementById('overlay').classList.add('open'); }
+function closeAdmin(){ document.getElementById('overlay').classList.remove('open'); }
+function switchT(tab, el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('addPane').style.display = tab==='add'?'block':'none';
+  document.getElementById('managePane').style.display = tab==='manage'?'block':'none';
+  if(tab==='manage') loadMgmt&&loadMgmt();
+}
+// Date/time
+function tick(){
+  const n=new Date(), d=['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'],
+  m=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+  document.getElementById('dt').textContent=`${d[n.getDay()]}, ${n.getDate()} ${m[n.getMonth()]} ${n.getFullYear()} | ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;
+}
+tick(); setInterval(tick,1000);
+</script>
+</body>
+</html>
 .nc-thumb{height:150px;overflow:hidden}
 .nc-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
 .news-card:hover .nc-thumb img{transform:scale(1.05)}
