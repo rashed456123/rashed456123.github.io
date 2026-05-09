@@ -443,10 +443,10 @@ img.lazy.loaded{opacity:1}
       <div class="nb-content" id="popupContent"></div>
       <div class="nb-share">
         <span class="nb-share-label">শেয়ার করুন:</span>
-        <button class="sbtn sbtn-fb" onclick="doShare('fb')">📘 Facebook</button>
-        <button class="sbtn sbtn-wa" onclick="doShare('wa')">💬 WhatsApp</button>
-        <button class="sbtn sbtn-tw" onclick="doShare('tw')">🐦 Twitter</button>
-        <button class="sbtn sbtn-cp" onclick="doShare('cp')">🔗 লিংক কপি</button>
+        <button class="sbtn sbtn-fb" onclick="doShare('fb',this)">📘 Facebook</button>
+        <button class="sbtn sbtn-wa" onclick="doShare('wa',this)">💬 WhatsApp</button>
+        <button class="sbtn sbtn-tw" onclick="doShare('tw',this)">🐦 Twitter</button>
+        <button class="sbtn sbtn-cp" onclick="doShare('cp',this)">🔗 লিংক কপি</button>
       </div>
     </div>
   </div>
@@ -933,17 +933,15 @@ window.closePopup = function() {
 };
 
 // ══ SHARE ══
-window.doShare = function(type) {
+window.doShare = function(type, btn) {
   const n = window._currentNews || {};
   const title = n.title || document.title;
-  // প্রতিটি নিউজের আলাদা URL
   const url = `${window.location.origin}${window.location.pathname}#news/${n.id}`;
   if (type === 'fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
   else if (type === 'wa') window.open(`https://wa.me/?text=${encodeURIComponent(title + '\n' + url)}`, '_blank');
   else if (type === 'tw') window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
   else if (type === 'cp') {
     navigator.clipboard.writeText(url).then(() => {
-      const btn = event.target;
       btn.textContent = '✅ কপি হয়েছে!';
       setTimeout(() => btn.textContent = '🔗 লিংক কপি', 2000);
     });
