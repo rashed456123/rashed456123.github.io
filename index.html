@@ -220,9 +220,32 @@ img{max-width:100%;display:block}
 .del-btn{background:var(--crimson);color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:11px;cursor:pointer;font-weight:600;white-space:nowrap;transition:background .2s}
 .del-btn:hover{background:#a00f22}
 
+/* SKELETON LOADING */
+@keyframes shimmer{0%{background-position:-1000px 0}100%{background-position:1000px 0}}
+.skeleton{background:linear-gradient(90deg,#f0f5ff 25%,#e2eaf5 50%,#f0f5ff 75%);background-size:1000px 100%;animation:shimmer 1.5s infinite linear;border-radius:6px}
+.sk-hero{border-radius:12px;height:380px;margin-bottom:14px}
+.sk-side{border-radius:10px;height:180px}
+.sk-card{border-radius:10px;overflow:hidden;background:var(--white);box-shadow:var(--shadow)}
+.sk-card-img{height:150px}
+.sk-card-body{padding:14px}
+.sk-line{height:12px;margin-bottom:8px;border-radius:4px}
+.sk-line.short{width:60%}
+.sk-line.medium{width:80%}
+.sk-list-item{display:flex;gap:14px;padding:16px;border-bottom:1px solid var(--border)}
+.sk-thumb{width:88px;height:68px;border-radius:7px;flex-shrink:0}
+
+/* LAZY IMAGE */
+img.lazy{opacity:0;transition:opacity .5s}
+img.lazy.loaded{opacity:1}
+
 /* SECRET HINT */
 .secret-hint{position:fixed;bottom:20px;right:20px;background:rgba(13,33,55,.9);color:rgba(255,255,255,.4);font-size:10px;padding:6px 12px;border-radius:6px;font-family:'DM Sans',sans-serif;z-index:999;opacity:0;transition:opacity .3s;pointer-events:none;letter-spacing:2px}
 .secret-hint.show{opacity:1}
+
+/* IMAGE UPLOAD */
+.img-upload-box{border:2px dashed var(--border);border-radius:8px;padding:20px;text-align:center;cursor:pointer;transition:all .2s;min-height:100px;display:flex;align-items:center;justify-content:center}
+.img-upload-box:hover{border-color:var(--blue);background:var(--light)}
+.img-upload-box img{max-height:200px;border-radius:6px;margin:0 auto}
 
 /* NOT AUTHORIZED */
 .not-auth{text-align:center;padding:20px;color:var(--crimson);font-size:13px;font-family:'DM Sans',sans-serif}
@@ -296,14 +319,27 @@ img{max-width:100%;display:block}
 <!-- MAIN -->
 <div class="page-body">
   <main>
-    <div id="heroWrap"></div>
+    <div id="heroWrap">
+      <!-- SKELETON -->
+      <div class="hero-section" id="heroSkeleton">
+        <div class="skeleton sk-hero" style="grid-row:1/3"></div>
+        <div class="skeleton sk-side"></div>
+        <div class="skeleton sk-side"></div>
+      </div>
+    </div>
     <div class="sec-head"><h2>সর্বশেষ সংবাদ</h2><a class="see-all" href="#" onclick="filterBy('',null);return false">সব দেখুন →</a></div>
     <div class="news-grid" id="gridWrap">
-      <div class="loading" style="grid-column:1/-1"><div class="spinner"></div>সংবাদ লোড হচ্ছে...</div>
+      <!-- SKELETON CARDS -->
+      <div class="sk-card"><div class="skeleton sk-card-img"></div><div class="sk-card-body"><div class="skeleton sk-line short"></div><div class="skeleton sk-line medium"></div><div class="skeleton sk-line short"></div></div></div>
+      <div class="sk-card"><div class="skeleton sk-card-img"></div><div class="sk-card-body"><div class="skeleton sk-line short"></div><div class="skeleton sk-line medium"></div><div class="skeleton sk-line short"></div></div></div>
+      <div class="sk-card"><div class="skeleton sk-card-img"></div><div class="sk-card-body"><div class="skeleton sk-line short"></div><div class="skeleton sk-line medium"></div><div class="skeleton sk-line short"></div></div></div>
+      <div class="sk-card"><div class="skeleton sk-card-img"></div><div class="sk-card-body"><div class="skeleton sk-line short"></div><div class="skeleton sk-line medium"></div><div class="skeleton sk-line short"></div></div></div>
     </div>
     <div class="sec-head"><h2>আরও সংবাদ</h2><a class="see-all" href="#">সব দেখুন →</a></div>
     <div class="list-section" id="listWrap">
-      <div class="loading"><div class="spinner"></div>লোড হচ্ছে...</div>
+      <div class="sk-list-item"><div class="skeleton sk-thumb"></div><div style="flex:1"><div class="skeleton sk-line short" style="margin-bottom:8px"></div><div class="skeleton sk-line medium"></div></div></div>
+      <div class="sk-list-item"><div class="skeleton sk-thumb"></div><div style="flex:1"><div class="skeleton sk-line short" style="margin-bottom:8px"></div><div class="skeleton sk-line medium"></div></div></div>
+      <div class="sk-list-item"><div class="skeleton sk-thumb"></div><div style="flex:1"><div class="skeleton sk-line short" style="margin-bottom:8px"></div><div class="skeleton sk-line medium"></div></div></div>
     </div>
   </main>
 
@@ -469,7 +505,26 @@ img{max-width:100%;display:block}
             </select>
           </div>
           <div class="fg"><label>বিস্তারিত বিবরণ *</label><textarea id="nb" placeholder="সংবাদের বিস্তারিত লিখুন..."></textarea></div>
-          <div class="fg"><label>ছবির URL (ঐচ্ছিক)</label><input type="url" id="ni" placeholder="https://example.com/image.jpg"></div>
+          
+          <!-- ছবি Upload -->
+          <div class="fg">
+            <label>ছবি আপলোড করুন</label>
+            <div class="img-upload-box" id="imgUploadBox" onclick="document.getElementById('imgFile').click()">
+              <div id="imgPreview">
+                <span style="font-size:32px">📷</span>
+                <p style="font-size:12px;color:var(--muted);margin-top:6px">ক্লিক করে ছবি সিলেক্ট করুন</p>
+              </div>
+            </div>
+            <input type="file" id="imgFile" accept="image/*" style="display:none" onchange="previewImg(this)">
+            <div id="uploadProgress" style="display:none;margin-top:8px">
+              <div style="background:var(--border);border-radius:4px;height:6px;overflow:hidden">
+                <div id="progressBar" style="background:var(--crimson);height:100%;width:0%;transition:width .3s;border-radius:4px"></div>
+              </div>
+              <p style="font-size:11px;color:var(--muted);margin-top:4px;font-family:'DM Sans',sans-serif" id="progressText">আপলোড হচ্ছে...</p>
+            </div>
+            <input type="hidden" id="ni">
+          </div>
+
           <div class="fg"><label>লেখকের নাম</label><input type="text" id="na" placeholder="নিজস্ব প্রতিবেদক"></div>
           <button class="abtn abtn-pub" onclick="publish()">✅ সংবাদ প্রকাশ করুন</button>
         </div>
@@ -538,6 +593,45 @@ onAuthStateChanged(auth, user => {
   }
 });
 
+// ══ CACHE SYSTEM ══
+const CACHE_KEY = 'jkkniu_news_cache';
+const CACHE_TIME = 5 * 60 * 1000; // 5 মিনিট
+
+function saveCache(news) {
+  try {
+    sessionStorage.setItem(CACHE_KEY, JSON.stringify({ data: news, time: Date.now() }));
+  } catch(e) {}
+}
+
+function loadCache() {
+  try {
+    const c = JSON.parse(sessionStorage.getItem(CACHE_KEY));
+    if (c && Date.now() - c.time < CACHE_TIME) return c.data;
+  } catch(e) {}
+  return null;
+}
+
+// ══ LAZY IMAGE LOADING ══
+function lazyLoadImages() {
+  const imgs = document.querySelectorAll('img.lazy');
+  if ('IntersectionObserver' in window) {
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          const img = e.target;
+          img.src = img.dataset.src;
+          img.onload = () => img.classList.add('loaded');
+          img.onerror = () => img.classList.add('loaded');
+          obs.unobserve(img);
+        }
+      });
+    }, { rootMargin: '200px' });
+    imgs.forEach(img => obs.observe(img));
+  } else {
+    imgs.forEach(img => { img.src = img.dataset.src; img.classList.add('loaded'); });
+  }
+}
+
 // ══ FORMAT DATE ══
 function fmtDate(ts) {
   if (!ts) return 'এইমাত্র';
@@ -560,13 +654,17 @@ function render(news) {
   document.getElementById('newsCount').textContent = news.length || '০';
   document.getElementById('tickerText').textContent = news.length ? news.map(n => n.title).join('  ‧  ') : 'সংবাদ শীঘ্রই আসছে...';
 
+  // Hero skeleton সরান
+  const heroSkel = document.getElementById('heroSkeleton');
+  if (heroSkel) heroSkel.remove();
+
   const feat = news[0];
   if (feat) {
     document.getElementById('heroWrap').innerHTML = `
       <div class="hero-section">
         <div class="hero-main" onclick="openNews('${feat.id}')">
           <div class="hero-img-bg">${feat.imageUrl ? '' : '📰'}</div>
-          ${feat.imageUrl ? `<img class="hero-img" src="${feat.imageUrl}" alt="">` : ''}
+          ${feat.imageUrl ? `<img class="hero-img lazy" data-src="${feat.imageUrl}" src="" alt="">` : ''}
           <div class="hero-grad"></div>
           <div class="hero-overlay">
             <div class="hero-cat">${feat.category || 'সংবাদ'}</div>
@@ -579,7 +677,7 @@ function render(news) {
         </div>
         ${news.slice(1,3).map(n => `
           <div class="hero-side" onclick="openNews('${n.id}')">
-            <div class="hs-img">${n.imageUrl ? `<img src="${n.imageUrl}" alt="">` : '📰'}</div>
+            <div class="hs-img">${n.imageUrl ? `<img class="lazy" data-src="${n.imageUrl}" src="" alt="" style="width:100%;height:100%;object-fit:cover">` : '📰'}</div>
             <div class="hs-body">
               <div class="hs-cat">${n.category || 'সংবাদ'}</div>
               <div class="hs-title">${n.title}</div>
@@ -595,7 +693,7 @@ function render(news) {
   document.getElementById('gridWrap').innerHTML = grid.length ?
     grid.map(n => `
       <div class="card" onclick="openNews('${n.id}')">
-        <div class="card-thumb">${n.imageUrl ? `<img src="${n.imageUrl}" alt="">` : '📰'}</div>
+        <div class="card-thumb">${n.imageUrl ? `<img class="lazy" data-src="${n.imageUrl}" src="" alt="">` : '📰'}</div>
         <div class="card-body">
           <div class="card-cat">${n.category || 'সংবাদ'}</div>
           <div class="card-title">${n.title}</div>
@@ -608,7 +706,7 @@ function render(news) {
   document.getElementById('listWrap').innerHTML = list.length ?
     list.map(n => `
       <div class="list-item" onclick="openNews('${n.id}')">
-        <div class="li-thumb">${n.imageUrl ? `<img src="${n.imageUrl}" alt="">` : '📰'}</div>
+        <div class="li-thumb">${n.imageUrl ? `<img class="lazy" data-src="${n.imageUrl}" src="" alt="">` : '📰'}</div>
         <div>
           <div class="li-cat">${n.category || 'সংবাদ'}</div>
           <div class="li-title">${n.title}</div>
@@ -627,12 +725,30 @@ function render(news) {
     </div>`).join('') || '<div class="empty-state">কোনো সংবাদ নেই</div>';
 
   window._allNews = news;
+
+  // Lazy load images
+  setTimeout(lazyLoadImages, 100);
 }
 
 // ══ LOAD ══
 async function load(cat = '') {
+  // Cache থেকে আগে দেখাও
+  if (!cat) {
+    const cached = loadCache();
+    if (cached) {
+      render(cached);
+      // Background এ update করো
+      fetchNews().then(news => {
+        saveCache(news);
+        render(news);
+      }).catch(() => {});
+      return;
+    }
+  }
   try {
-    render(await fetchNews(cat));
+    const news = await fetchNews(cat);
+    if (!cat) saveCache(news);
+    render(news);
   } catch(e) {
     document.getElementById('gridWrap').innerHTML = '<div class="empty-state" style="grid-column:1/-1">সংবাদ লোড করা যায়নি।</div>';
   }
@@ -692,17 +808,28 @@ window.publish = async () => {
   const t = document.getElementById('nt').value.trim();
   const c = document.getElementById('nc').value;
   const b = document.getElementById('nb').value.trim();
-  const i = document.getElementById('ni').value.trim();
   const a = document.getElementById('na').value.trim();
   if (!t || !c || !b) { showMsg('addMsg','⚠️ শিরোনাম, বিভাগ ও বিবরণ আবশ্যক!','err'); return; }
+
+  // ছবি আপলোড
+  let imageUrl = document.getElementById('ni').value || '';
+  const imgFile = document.getElementById('imgFile').files[0];
+  if (imgFile && !imageUrl) {
+    imageUrl = await uploadToCloudinary(imgFile) || '';
+  }
+
   try {
     await addDoc(collection(db,"news"), {
       title: t, category: c, content: b,
-      imageUrl: i || '', author: a || 'নিজস্ব প্রতিবেদক',
+      imageUrl: imageUrl, author: a || 'নিজস্ব প্রতিবেদক',
       createdAt: serverTimestamp()
     });
     showMsg('addMsg','✅ সংবাদ সফলভাবে প্রকাশিত হয়েছে!','ok');
-    ['nt','nc','nb','ni','na'].forEach(id => document.getElementById(id).value = '');
+    ['nt','nc','nb','na'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('ni').value = '';
+    document.getElementById('imgFile').value = '';
+    document.getElementById('imgPreview').innerHTML = '<span style="font-size:32px">📷</span><p style="font-size:12px;color:var(--muted);margin-top:6px">ক্লিক করে ছবি সিলেক্ট করুন</p>';
+    document.getElementById('uploadProgress').style.display = 'none';
     load(); loadMgmt();
   } catch(e) { showMsg('addMsg','❌ সমস্যা: ' + e.message,'err'); }
 };
@@ -814,6 +941,46 @@ document.querySelector('.brand-name').addEventListener('click', function() {
   clearTimeout(window._logoTimer);
   window._logoTimer = setTimeout(() => logoClicks = 0, 3000);
 });
+
+// ══ CLOUDINARY IMAGE UPLOAD ══
+const CLOUD_NAME = 'djw0chhkn';
+const UPLOAD_PRESET = 'jkkniu_news'; // unsigned preset
+
+window.previewImg = function(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    document.getElementById('imgPreview').innerHTML = `<img src="${e.target.result}" style="max-height:180px;border-radius:6px;margin:0 auto">`;
+  };
+  reader.readAsDataURL(file);
+};
+
+async function uploadToCloudinary(file) {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', UPLOAD_PRESET);
+  formData.append('cloud_name', CLOUD_NAME);
+
+  document.getElementById('uploadProgress').style.display = 'block';
+  document.getElementById('progressBar').style.width = '30%';
+  document.getElementById('progressText').textContent = 'ছবি আপলোড হচ্ছে...';
+
+  try {
+    const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
+      method: 'POST',
+      body: formData
+    });
+    document.getElementById('progressBar').style.width = '100%';
+    const data = await res.json();
+    document.getElementById('progressText').textContent = '✅ ছবি আপলোড সম্পন্ন!';
+    document.getElementById('ni').value = data.secure_url;
+    return data.secure_url;
+  } catch(e) {
+    document.getElementById('progressText').textContent = '❌ ছবি আপলোড ব্যর্থ হয়েছে';
+    return '';
+  }
+}
 
 // ══ DATE / TIME ══
 function tick() {
