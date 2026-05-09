@@ -219,6 +219,8 @@ img{max-width:100%;display:block}
 .mgmt-title{font-size:13px;font-weight:600;color:var(--ink);line-height:1.4;flex:1}
 .del-btn{background:var(--crimson);color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:11px;cursor:pointer;font-weight:600;white-space:nowrap;transition:background .2s}
 .del-btn:hover{background:#a00f22}
+.edit-btn{background:var(--blue);color:#fff;border:none;border-radius:6px;padding:6px 12px;font-size:11px;cursor:pointer;font-weight:600;white-space:nowrap;transition:background .2s}
+.edit-btn:hover{background:var(--navy)}
 
 /* SKELETON LOADING */
 @keyframes shimmer{0%{background-position:-1000px 0}100%{background-position:1000px 0}}
@@ -697,7 +699,7 @@ function render(news) {
         <div class="card-body">
           <div class="card-cat">${n.category || 'সংবাদ'}</div>
           <div class="card-title">${n.title}</div>
-          <div class="card-meta">📅 ${fmtDate(n.createdAt)}</div>
+          <div class="card-meta">📅 ${fmtDate(n.createdAt)} ${n.views ? `· 👁 ${n.views} বার পঠিত` : ''}</div>
         </div>
       </div>`).join('') :
     '<div class="empty-state" style="grid-column:1/-1"><div class="ei">📰</div><p>এখনো কোনো সংবাদ নেই।</p></div>';
@@ -756,7 +758,7 @@ async function load(cat = '') {
 load();
 window._load = load;
 
-// ══ OPEN NEWS POPUP ══
+// ══ OPEN NEWS POPUP (View Counter সহ) ══
 window.openNews = function(id) {
   const n = (window._allNews || []).find(x => x.id === id);
   if (!n) return;
@@ -772,6 +774,16 @@ window.openNews = function(id) {
   window._currentNews = n;
   document.getElementById('newsPopup').classList.add('open');
   document.body.style.overflow = 'hidden';
+
+  // URL আপডেট করো — প্রতিটি নিউজের আলাদা link
+  history.pushState({ newsId: id }, n.title, `#news/${id}`);
+
+  // View counter বাড়াও
+  try {
+    import("https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js").then(({updateDoc, increment}) => {
+      updateDoc(doc(db,"news",id), { views: increment(1) }).catch(()=>{});
+    });
+  } catch(e) {}
 };
 
 // ══ LOAD MGMT ══
@@ -785,7 +797,10 @@ async function loadMgmt() {
             <div class="mgmt-cat">${n.category}</div>
             <div class="mgmt-title">${n.title}</div>
           </div>
-          <button class="del-btn" onclick="delNews('${n.id}')">🗑 মুছুন</button>
+          <div style="display:flex;gap:6px;flex-shrink:0">
+            <button class="edit-btn" onclick="editNews('${n.id}')">✏️ এডিট</button>
+            <button class="del-btn" onclick="delNews('${n.id}')">🗑 মুছুন</button>
+          </div>
         </div>`).join('') :
       '<div class="empty-state">কোনো সংবাদ নেই</div>';
   } catch(e) {
@@ -793,6 +808,29 @@ async function loadMgmt() {
   }
 }
 window.loadMgmt = loadMgmt;
+
+// ══ EDIT NEWS ══
+window.editNews = function(id) {
+  const n = (window._allNews || []).find(x => x.id === id);
+  if (!n) return;
+
+  // Add tab এ যাও এবং পুরনো data ভরো
+  switchT('add', document.querySelector('.tab'));
+  document.getElementById('nt').value = n.title || '';
+  document.getElementById('nc').value = n.category || '';
+  document.getElementById('nb').value = n.content || '';
+  document.getElementById('na').value = n.author || '';
+  document.getElementById('ni').value = n.imageUrl || '';
+
+  if (n.imageUrl) {
+    document.getElementById('imgPreview').innerHTML = `<img src="${n.imageUrl}" style="max-height:180px;border-radius:6px;margin:0 auto">`;
+  }
+
+  // Edit mode সেট করো
+  window._editId = id;
+  document.querySelector('.abtn-pub').textContent = '✅ সংবাদ আপডেট করুন';
+  showMsg('addMsg','✏️ এডিট মোড চালু — পরিবর্তন করে আপডেট করুন','ok');
+};
 
 // ══ DELETE ══
 window.delNews = async id => {
@@ -803,7 +841,7 @@ window.delNews = async id => {
   } catch(e) { alert('মুছতে সমস্যা: ' + e.message); }
 };
 
-// ══ PUBLISH ══
+// ══ PUBLISH / UPDATE ══
 window.publish = async () => {
   const t = document.getElementById('nt').value.trim();
   const c = document.getElementById('nc').value;
@@ -814,22 +852,36 @@ window.publish = async () => {
   // ছবি আপলোড
   let imageUrl = document.getElementById('ni').value || '';
   const imgFile = document.getElementById('imgFile').files[0];
-  if (imgFile && !imageUrl) {
-    imageUrl = await uploadToCloudinary(imgFile) || '';
+  if (imgFile) {
+    imageUrl = await uploadToCloudinary(imgFile) || imageUrl;
   }
 
   try {
-    await addDoc(collection(db,"news"), {
-      title: t, category: c, content: b,
-      imageUrl: imageUrl, author: a || 'নিজস্ব প্রতিবেদক',
-      createdAt: serverTimestamp()
-    });
-    showMsg('addMsg','✅ সংবাদ সফলভাবে প্রকাশিত হয়েছে!','ok');
+    if (window._editId) {
+      // UPDATE
+      const { updateDoc } = await import("https://www.gstatic.com/firebasejs/11.0.0/firebase-firestore.js");
+      await updateDoc(doc(db,"news",window._editId), {
+        title: t, category: c, content: b,
+        imageUrl: imageUrl, author: a || 'নিজস্ব প্রতিবেদক'
+      });
+      showMsg('addMsg','✅ সংবাদ সফলভাবে আপডেট হয়েছে!','ok');
+      window._editId = null;
+      document.querySelector('.abtn-pub').textContent = '✅ সংবাদ প্রকাশ করুন';
+    } else {
+      // NEW
+      await addDoc(collection(db,"news"), {
+        title: t, category: c, content: b,
+        imageUrl: imageUrl, author: a || 'নিজস্ব প্রতিবেদক',
+        createdAt: serverTimestamp(), views: 0
+      });
+      showMsg('addMsg','✅ সংবাদ সফলভাবে প্রকাশিত হয়েছে!','ok');
+    }
     ['nt','nc','nb','na'].forEach(id => document.getElementById(id).value = '');
     document.getElementById('ni').value = '';
     document.getElementById('imgFile').value = '';
     document.getElementById('imgPreview').innerHTML = '<span style="font-size:32px">📷</span><p style="font-size:12px;color:var(--muted);margin-top:6px">ক্লিক করে ছবি সিলেক্ট করুন</p>';
     document.getElementById('uploadProgress').style.display = 'none';
+    sessionStorage.removeItem('jkkniu_news_cache');
     load(); loadMgmt();
   } catch(e) { showMsg('addMsg','❌ সমস্যা: ' + e.message,'err'); }
 };
@@ -876,13 +928,16 @@ function showMsg(id, msg, type) {
 window.closePopup = function() {
   document.getElementById('newsPopup').classList.remove('open');
   document.body.style.overflow = '';
+  // URL পরিষ্কার করো
+  history.pushState('', document.title, window.location.pathname);
 };
 
 // ══ SHARE ══
 window.doShare = function(type) {
   const n = window._currentNews || {};
   const title = n.title || document.title;
-  const url = window.location.href;
+  // প্রতিটি নিউজের আলাদা URL
+  const url = `${window.location.origin}${window.location.pathname}#news/${n.id}`;
   if (type === 'fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
   else if (type === 'wa') window.open(`https://wa.me/?text=${encodeURIComponent(title + '\n' + url)}`, '_blank');
   else if (type === 'tw') window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`, '_blank');
@@ -894,6 +949,34 @@ window.doShare = function(type) {
     });
   }
 };
+
+// ══ URL HASH DETECTION — Direct news link ══
+function checkHash() {
+  const hash = window.location.hash;
+  if (hash.startsWith('#news/')) {
+    const newsId = hash.replace('#news/', '');
+    // News load হওয়ার পর খুলবে
+    const tryOpen = () => {
+      if (window._allNews && window._allNews.length) {
+        openNews(newsId);
+      } else {
+        setTimeout(tryOpen, 500);
+      }
+    };
+    setTimeout(tryOpen, 800);
+  } else if (hash === '#admin') {
+    openAdmin();
+  }
+}
+checkHash();
+window.addEventListener('hashchange', () => {
+  const hash = window.location.hash;
+  if (hash.startsWith('#news/')) {
+    openNews(hash.replace('#news/', ''));
+  } else if (hash === '#admin') {
+    openAdmin();
+  }
+});
 
 // ══ ADMIN PANEL ══
 function openAdmin() { document.getElementById('overlay').classList.add('open'); }
@@ -928,10 +1011,6 @@ document.addEventListener('keydown', function(e) {
   window._hintTimer = setTimeout(() => { hint.classList.remove('show'); secretBuf = ''; }, 1500);
   if (secretBuf === secretCode) { openAdmin(); secretBuf = ''; hint.classList.remove('show'); }
 });
-
-// পদ্ধতি ২: URL এ #admin
-if (window.location.hash === '#admin') openAdmin();
-window.addEventListener('hashchange', () => { if (window.location.hash === '#admin') openAdmin(); });
 
 // পদ্ধতি ৩: Logo তে ৫ বার ক্লিক
 let logoClicks = 0;
