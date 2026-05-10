@@ -2,6 +2,7 @@
 <html lang="bn" prefix="og: https://ogp.me/ns#">
 <head>
 <meta charset="UTF-8">
+<meta name="google-site-verification" content="4RZIsALc60RoetDzLy4WsDWQHkIKlLVPTTcZgjvVTw0" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <!-- ══ PRIMARY SEO ══ -->
@@ -45,7 +46,7 @@
 <!-- ══ FONTS ══ -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@300;400;500;600;700&family=Syne:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Bangla:ital@0;1&family=Hind+Siliguri:wght@300;400;500;600;700&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 /* ═══════════════════════════════════════════
@@ -82,7 +83,7 @@
   /* Typography */
   --font-heading: 'Tiro Bangla', 'Hind Siliguri', serif;
   --font-body: 'Hind Siliguri', sans-serif;
-  --font-ui: 'Syne', sans-serif;
+  --font-ui: 'DM Sans', 'Hind Siliguri', sans-serif;
 
   /* Layout */
   --max: 1300px;
@@ -931,6 +932,58 @@ ul,ol{list-style:none}
 .footer-bottom-links{display:flex;gap:16px}
 
 /* ═══════════════════════════════
+   DARK MODE
+═══════════════════════════════ */
+body.dark{
+  --ink: #e8edf5;
+  --ink-soft: #c5d0de;
+  --parchment: #0f1117;
+  --parchment-dark: #161b24;
+  --cloud: #1a2030;
+  --white: #1e2535;
+  --border: #2a3548;
+  --border-dark: #3a4a60;
+  --slate: #8899aa;
+  --mist: #556678;
+  --s1: 0 1px 4px rgba(0,0,0,.3);
+  --s2: 0 4px 16px rgba(0,0,0,.4);
+  --s3: 0 12px 40px rgba(0,0,0,.5);
+}
+body.dark .masthead{background:#161b24;border-color:#2a3548}
+body.dark .site-topbar{background:#0a0e14}
+body.dark .widget{background:#1e2535;border-color:#2a3548}
+body.dark .news-card{background:#1e2535}
+body.dark .list-section{background:#1e2535}
+body.dark .list-item:hover{background:#252f42}
+body.dark .search-wrap input{background:#252f42;color:#e8edf5;border-color:#2a3548}
+body.dark .search-wrap{background:#252f42;border-color:#2a3548}
+body.dark .tag-pill{background:#252f42;color:#c5d0de;border-color:#3a4a60}
+body.dark .tag-pill:hover{background:var(--vermilion);color:#fff}
+body.dark .modal-box{background:#1e2535}
+body.dark .modal-content{color:#c5d0de}
+body.dark .modal-close{background:#252f42;border-color:#3a4a60;color:#8899aa}
+body.dark .admin-box{background:#1e2535}
+body.dark .admin-body input,body.dark .admin-body textarea,body.dark .admin-body select{background:#252f42;color:#e8edf5;border-color:#3a4a60}
+body.dark .about-widget-inner{background:#1e2535}
+body.dark .card-title{color:#e8edf5}
+body.dark .hs-title{color:#e8edf5}
+body.dark .hero-side{background:#1e2535}
+body.dark .sec-title{color:#e8edf5}
+body.dark #about-view,body.dark #contact-view{background:#0f1117}
+body.dark .skel{background:linear-gradient(90deg,#1e2535 25%,#252f42 50%,#1e2535 75%);background-size:800px 100%}
+
+/* DARK MODE TOGGLE BUTTON */
+.dm-btn{
+  background:none;border:1.5px solid rgba(255,255,255,.15);
+  color:rgba(255,255,255,.6);
+  width:30px;height:30px;border-radius:6px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;cursor:pointer;transition:all .2s;
+  flex-shrink:0;
+}
+.dm-btn:hover{background:rgba(255,255,255,.1);color:#fff}
+
+/* ═══════════════════════════════
    LAZY IMAGES
 ═══════════════════════════════ */
 img.lazy{opacity:0;transition:opacity .4s}
@@ -995,6 +1048,7 @@ img.lazy.loaded{opacity:1}
       <div class="divider"></div>
       <a href="#" aria-label="Facebook">𝐟</a>
       <a href="#" aria-label="Twitter">𝕏</a>
+      <button class="dm-btn" id="dmBtn" onclick="toggleDark()" title="Dark Mode">🌙</button>
     </div>
   </div>
 </div>
@@ -1828,6 +1882,19 @@ window.openNews = function(id) {
   // Open Graph meta update for sharing
   document.title = `${news.title} | নজরুল বার্তা`;
 
+  // Update OG tags for Facebook share with news image
+  function setOG(prop, val) {
+    let el = document.querySelector(`meta[property="${prop}"]`);
+    if (!el) { el = document.createElement('meta'); el.setAttribute('property', prop); document.head.appendChild(el); }
+    el.setAttribute('content', val);
+  }
+  const shareUrl = `https://jkkniunews.github.io/?news=${id}`;
+  const shareImg = news.imageUrl || 'https://jkkniunews.github.io/og-image.png';
+  setOG('og:title', `${news.title} | নজরুল বার্তা`);
+  setOG('og:description', (news.body || '').substring(0, 150) + '...');
+  setOG('og:image', shareImg);
+  setOG('og:url', shareUrl);
+
   const modal = document.getElementById('news-modal');
   const heroEl = document.getElementById('modal-hero');
   const catEl = document.getElementById('modal-cat');
@@ -1952,6 +2019,29 @@ window.doShare = function(type, btn) {
     });
   }
 };
+
+/* ══════════════════════════════
+   DARK MODE
+══════════════════════════════ */
+window.toggleDark = function() {
+  const isDark = document.body.classList.toggle('dark');
+  const btn = document.getElementById('dmBtn');
+  btn.textContent = isDark ? '☀️' : '🌙';
+  btn.title = isDark ? 'Light Mode' : 'Dark Mode';
+  try { localStorage.setItem('nb_dark', isDark ? '1' : '0'); } catch(e) {}
+};
+
+// Auto apply saved preference
+try {
+  const saved = localStorage.getItem('nb_dark');
+  // Also check system preference
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  if (saved === '1' || (saved === null && prefersDark)) {
+    document.body.classList.add('dark');
+    const btn = document.getElementById('dmBtn');
+    if (btn) { btn.textContent = '☀️'; btn.title = 'Light Mode'; }
+  }
+} catch(e) {}
 
 /* ══════════════════════════════
    MOBILE NAV
