@@ -4,4 +4,4 @@ Disallow: /admin
 Disallow: /?news=*
 
 # Sitemap
-Sitemap: https://rashed456123.github.io/sitemap.xml
+Sitemap: https://jkkniunews.github.io/sitemap.xml
