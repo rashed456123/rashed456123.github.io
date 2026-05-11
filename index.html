@@ -1875,6 +1875,7 @@ window.openNews = function(id) {
   const news = allNews.find(n => n.id === id);
   if (!news) return;
   currentNewsId = id;
+ window._currentNews = news;
 
   // Update URL (no hash routing — use query param for SEO)
   const slug = news.title.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9\u0980-\u09FF-]/g, '').toLowerCase();
@@ -1993,7 +1994,30 @@ window.addEventListener('popstate', e => {
    SHARE
 ══════════════════════════════ */
 window.doShare = function(type, btn) {
-  const newsId = currentNewsId;
+  const news = window._currentNews || {};
+  const newsId = news.id || '';
+  const title = news.title || document.title;
+  const canonicalBase = 'https://jkkniunews.github.io/';
+  const shareUrl = newsId ? `${canonicalBase}?news=${newsId}` : canonicalBase;
+
+  if (type === 'fb') {
+    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
+    window.open(fbUrl, '_blank', 'width=600,height=400');
+  }
+  else if (type === 'wa') {
+    window.open(`https://wa.me/?text=${encodeURIComponent(title + '\n\n' + shareUrl)}`, '_blank');
+  }
+  else if (type === 'tw') {
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
+  }
+  else if (type === 'cp') {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      const orig = btn.textContent;
+      btn.textContent = '✅ কপি হয়েছে!';
+      setTimeout(() => btn.textContent = orig, 2000);
+    });
+  }
+};
   const title = document.getElementById('modal-title')?.textContent || '';
   // Use the canonical site URL for sharing so Facebook/WhatsApp can fetch og:image
   const canonicalBase = 'https://jkkniunews.github.io/';
