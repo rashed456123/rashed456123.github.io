@@ -2018,32 +2018,7 @@ window.doShare = function(type, btn) {
     });
   }
 };
-  const title = document.getElementById('modal-title')?.textContent || '';
-  // Use the canonical site URL for sharing so Facebook/WhatsApp can fetch og:image
-  const canonicalBase = 'https://jkkniunews.github.io/';
-  const shareUrl = newsId ? `${canonicalBase}?news=${newsId}` : window.location.href;
-
-  if (type === 'fb') {
-    // Facebook share — open in new tab (popup blockers may block window.open on mobile)
-    const fbUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}&quote=${encodeURIComponent(title)}`;
-    const a = document.createElement('a');
-    a.href = fbUrl;
-    a.target = '_blank';
-    a.rel = 'noopener noreferrer';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-  }
-  else if (type === 'wa') window.open(`https://wa.me/?text=${encodeURIComponent(title + '\n' + shareUrl)}`, '_blank');
-  else if (type === 'tw') window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(shareUrl)}`, '_blank');
-  else if (type === 'cp') {
-    navigator.clipboard.writeText(shareUrl).then(() => {
-      const orig = btn.textContent;
-      btn.textContent = '✅ কপি হয়েছে!';
-      setTimeout(() => btn.textContent = orig, 2000);
-    });
-  }
-};
+  
 
 /* ══════════════════════════════
    DARK MODE
